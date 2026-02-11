@@ -1,32 +1,29 @@
+import axios from 'axios';
+
 const API_BASE_URL = 'http://localhost:8000';
 
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 export const assessRisk = async (riskData) => {
-  const response = await fetch(`${API_BASE_URL}/assess-risk`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(riskData),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw { response: { data: error } };
+  try {
+    const response = await apiClient.post('/assess-risk', riskData);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-
-  return response.json();
 };
 
 export const getRisks = async (level = null) => {
-  const url = level
-    ? `${API_BASE_URL}/risks?level=${level}`
-    : `${API_BASE_URL}/risks`;
-
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch risks');
+  try {
+    const params = level ? { level } : {};
+    const response = await apiClient.get('/risks', { params });
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-
-  return response.json();
 };

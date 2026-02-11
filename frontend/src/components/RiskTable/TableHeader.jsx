@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TableHeader = ({ label, sortKey, currentSort, onSort }) => {
-  const isSorted = currentSort.field === sortKey;
+  const isSorted = currentSort &&  currentSort.field === sortKey;
   const arrow = isSorted ? (currentSort.direction === 'asc' ? ' ↑' : ' ↓') : '';
 
   return (

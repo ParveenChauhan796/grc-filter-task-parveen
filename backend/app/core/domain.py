@@ -52,5 +52,5 @@ class Risk:
             "impact": self.impact,
             "score": self.score,
             "level": self.level,
-            "created_at": self.created_at.isoformat() if self.created_at else None
+            "created_at": self.created_at if self.created_at else None
         }
